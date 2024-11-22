@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.syncfusion.com/ej2/19.3.55/material.css" rel="stylesheet" />
+    <script src="https://cdn.syncfusion.com/ej2/19.3.55/dist/ej2.min.js"></script>
+</head>
+<div class="container" style="margin-top: 3.5%">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="widget widget-red">
+                    <span>Total Income: $@ViewBag.TotalIncome</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="widget widget-green">
+                    <span>Total Expense: $@ViewBag.TotalExpense</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="widget widget-blue">
+                @if ((decimal)ViewBag.Balance < 0)
+                {
+                    <span>Balance: -$@Math.Abs((decimal)ViewBag.Balance)</span>
+                }
+                else
+                {
+                    <span>Balance: $@ViewBag.Balance</span>
+                }
+                </div>
+            </div>
+        </div>
+        <div class="row mb-8">
+            <div class="col-md-3">
+                <div class="widget">
+                    <div class="p-4 centered-text">
+                        <h5 class=" = "fw-bold>Expense Trends</h5>
+                    </div>
+                <ejs-accumulationchart id="expense-chart-container" background="#202126">
+                        <e-accumulation-series-collection>
+                        <e-accumulation-series dataSource="ViewBag.ExpenseCategoryData" xName="XValue" yName="YValue" type="Pie">
+                            </e-accumulation-series>
+                        </e-accumulation-series-collection>
+                        <e-accumulationchart-legendsettings>
+                            <e-legendsettings-textstyle color="white" size="1rem">
+
+                            </e-legendsettings-textstyle>
+                        </e-accumulationchart-legendsettings>
+                    </ejs-accumulationchart>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="widget">
+                    <div class="p-4 centered-text">
+                        <h5 class=" = " fw-bold>Income Trends</h5>
+                    </div>
+                <ejs-accumulationchart id="trend-chart-container" background="#202126">
+                        <e-accumulation-series-collection>
+                            <e-accumulation-series dataSource="ViewBag.IncomeCategoryData" xName="XValue" yName="YValue" type="Pie">
+                            </e-accumulation-series>
+                        </e-accumulation-series-collection>
+                    <e-accumulationchart-legendsettings>
+                        <e-legendsettings-textstyle color="white" size="1rem">
+
+                        </e-legendsettings-textstyle>
+                    </e-accumulationchart-legendsettings>
+                    </ejs-accumulationchart>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="widget">
+                    <div class="p-4 centered-text">
+                    <h5 class=" = " fw-bold>Recent Transactions vs Expenses</h5>
+                    </div>
+                <ejs-chart id="spline-chart-container" background="#202126" palettes=@(new string[]{"red","#249515"})>
+                            <e-series-collection>
+                                <e-series dataSource="ViewBag.IncomeData" xName="XValue" yName="YValue" type="Spline" width ="3"></e-series>
+                                <e-series dataSource="ViewBag.ExpenseData" xName="XValue" yName="YValue" type="Spline" width ="3"></e-series>
+                            </e-series-collection>
+                            <e-chart-legendsettings visible="true" position="Top"></e-chart-legendsettings>
+                            <e-chart-primaryxaxis valueType="DateTime" labelFormat="yyyyw-MM-dd">
+                                <e-majorgridlines width="0"></e-majorgridlines>
+                                <e-majorticklines width ="0"></e-majorticklines>
+                            </e-chart-primaryxaxis>
+                            <e-chart-primaryyaxis >
+                                <e-majorgridlines width="1" color=white dashArray="3,5"></e-majorgridlines>
+                                <e-majorticklines width="0"></e-majorticklines>
+                            </e-chart-primaryyaxis>
+                            <e-chart-chartarea>
+                                <e-chartarea-border width = "0"></e-chartarea-border>
+                            </e-chart-chartarea> 
+                    </ejs-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

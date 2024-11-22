@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ExpenseApp.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="table-container widget" style="max-width: 1250px;margin: 0 auto; margin-top: 3.5%">
+    <h2 style="text-align:center; margin-top:2.5%;">Transactions</h2>
+
+    <form style="margin-left: 95%">
+        <button type="submit" class="btn btn-primary" style="background-color: #202126; padding: 10px 15px" asp-action="Create" asp-controller="Transactions">Add</button>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-white">
+                    Transaction
+                </th>
+                <th class="text-white">
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th class="text-white">
+                    @Html.DisplayNameFor(model => model.DateTime)
+                </th>
+                <th class="text-white">
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th class="text-white">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                    <td class="text-white">
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                    <td class="text-white">
+                    $@item.Amount
+                </td>
+                    <td class="text-white">
+                    @Html.DisplayFor(modelItem => item.DateTime)
+                </td>
+                    <td class="text-white">
+                        @if (item.Category.IsExpense)
+                        {
+                            <div>@item.Category.Title @item.Category.Icon</div>
+                        }
+                        else
+                        {
+                            <div>@item.Category.Title @item.Category.Icon</div>
+                        }
+                    </td>
+                    <td class="text-white">
+                     <a style="color: white; text-decoration: none" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                     <a style="color: white; text-decoration: none" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<ExpenseApp.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="table-container widget" style="max-width: 625px; margin: 0 auto; margin-top: 3.5%">
+    <h2 style="text-align:center; margin-top:5%;">Categories</h2>
+    <form style="margin-left: 89.5%">
+        <button type="submit" class="btn btn-primary" style="background-color: #202126; padding: 10px 15px" asp-action="Create" asp-controller="Categories">Add</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-white">
+                    Category
+                </th>
+                <th class="text-white">
+                    Type
+                </th>
+                <th class="text-white">
+                
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                    <td class="text-white">
+                    @item.Title @item.Icon
+                </td >
+                    <td class="text-white">
+                        @if (item.IsExpense)
+                        {
+                            <div class="text-red">Expense 🟥</div>
+                        }
+                        else
+                        {
+                            <div class="Text-red">Income &nbsp🟩</div>
+                        }
+                </td>
+                    <td class="text-white">
+                        <a style="color: white; text-decoration: none" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+
+                        <a style="color: white; text-decoration: none" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+
+
+
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>

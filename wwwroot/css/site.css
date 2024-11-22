@@ -1,0 +1,122 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #202020;
+    color: white;
+}
+
+h1 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+.widget {
+    background-color: #202126; /* Default background color */
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid grey;
+    margin-bottom: 20px; /* Add margin at the bottom to create gaps between widgets */
+}
+
+.widget-red {
+    border-color: red; /* Red background color */
+}
+
+.widget-green {
+    border-color: green; /* Green background color */
+}
+
+.widget-blue {
+    border-color: blue; /* Blue background color */
+}
+
+.centered-text {
+    text-align: center;
+}
+
+.secondary-color {
+    color: #23253C;
+}
+
+/*cool color
+ #16171C;
+ #202126
+*/
+
+/*.table-container {
+    max-width: 625px;*/ /* Set the maximum width of the table container */
+    /*margin: 0 auto;*/ /* Center the container horizontally */
+/*}*/
+
+/* Style for the table */
+.custom-table {
+    width: 100%; /* Make the table fill the container */
+    border-collapse: collapse; /* Collapse table borders */
+    /* Additional table styles go here */
+}
+
+input[type='radio']:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #d1d3d1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']#income-radio:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: green;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+input[type='radio']#expense-radio:checked:after {
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: red;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 2px solid white;
+}
+
+
+
