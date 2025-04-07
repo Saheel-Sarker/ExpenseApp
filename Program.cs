@@ -1,16 +1,28 @@
 ﻿using ExpenseApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+var rawUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+
+
+if (string.IsNullOrEmpty(rawUrl))
+    throw new Exception("DATABASE_URL environment variable not found!");
+
+// Convert URI to key-value format
+var databaseUri = new Uri(rawUrl);
+var userInfo = databaseUri.UserInfo.Split(':');
+
+var npgsqlConnStr = $"Host={databaseUri.Host};Port={databaseUri.Port};Username={userInfo[0]};Password={userInfo[1]};Database={databaseUri.AbsolutePath.TrimStart('/')};SSL Mode=Require;Trust Server Certificate=true;";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(npgsqlConnStr));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

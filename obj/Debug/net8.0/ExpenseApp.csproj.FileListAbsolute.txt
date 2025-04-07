@@ -595,3 +595,7 @@ C:\Users\sarke\OneDrive\Desktop\Saheel-Sarker Projects master ExpenseApp\bin\Deb
 c:\Users\sarke\OneDrive\Desktop\Saheel-Sarker Projects master ExpenseApp\bin\Debug\net8.0\ExpenseApp.staticwebassets.endpoints.json
 c:\Users\sarke\OneDrive\Desktop\Saheel-Sarker Projects master ExpenseApp\obj\Debug\net8.0\staticwebassets.build.endpoints.json
 c:\Users\sarke\OneDrive\Desktop\Saheel-Sarker Projects master ExpenseApp\obj\Debug\net8.0\staticwebassets\msbuild.ExpenseApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\sarke\OneDrive\Desktop\Saheel-Sarker Projects master ExpenseApp\bin\Debug\net8.0\Npgsql.dll
+C:\Users\sarke\OneDrive\Desktop\Saheel-Sarker Projects master ExpenseApp\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\sarke\OneDrive\Desktop\Saheel-Sarker Projects master ExpenseApp\bin\Debug\net8.0\DotNetEnv.dll
+C:\Users\sarke\OneDrive\Desktop\Saheel-Sarker Projects master ExpenseApp\bin\Debug\net8.0\Sprache.dll
