@@ -1,0 +1,53 @@
+﻿@model ExpenseApp.Models.Category
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="container" style="width:75%; margin-top: 15%">
+    <div class="row justify-content-center ">
+        <div class="col-md-6">
+            <div class="widget" style="background-color: #202126">
+                <h3 style="text-align:center; margin-top:7%">Edit Category</h3>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group" style="margin-inline: 5%; margin-top:10% ">
+                        <input asp-for="Title" class="form-control text-white" style="background-color: #202126" placeholder="Enter Title..." />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="margin-inline: 5%; margin-top:3%">
+                        <input asp-for="Icon" class="form-control text-white" style="background-color: #202126" placeholder="Enter Icon..." />
+                        <span asp-validation-for="Icon" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group;" style="text-align:center; margin-top: 2%">
+                        <input type="radio" id="income-radio" value="false" name="IsExpense" class="income-select" />
+                        <label for="income-radio">Income</label>
+                        <input type="radio" id="expense-radio" value="true" name="IsExpense" class="expense-select" />
+                        <label for="expense-radio">Expense</label>
+                    </div>
+
+                    <div class="form-group" style="text-align:center; margin-top: 5%">
+                        <button type="submit" class="btn btn-outline-success" style="color: white; text-decoration: none;">Save</button>
+                        <a class="btn btn-outline-info" style="color: white; text-decoration: none" asp-action="Index">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div class="row">
+    <div class="col-md-4">
+
+    </div>
+</div> *@
+
+@* <div>
+    <a asp-action="Index">Back to List</a>
+</div> *@
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

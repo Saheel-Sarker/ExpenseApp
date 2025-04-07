@@ -1,0 +1,128 @@
+﻿@model IEnumerable<ExpenseApp.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="table-container" style="max-width: 1100px;margin: 0 auto; margin-top: 2.5%">
+    <h2 style="text-align:center; margin-top:2.5%;">Transactions</h2>
+
+    <form style="margin-left: 95%">
+        <button type="submit" class="fab" style="padding: 10px 15px" asp-action="Create" asp-controller="Transactions"><i class="fas fa-pen"></i></button>
+    </form>
+    @using (Html.BeginForm())
+    {
+        <div class="form-group input-group text-danger" style="margin-top: 4%; display: flex; justify-content: flex-end;">
+            <input type="search" class="form-control text-white" style="background-color: #202126; max-width: 150px; border-top-right-radius: 0; border-bottom-right-radius: 0;" name="searchString" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-outline-success" style="color: white; text-decoration: none; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </span>
+        </div>
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-white" style="width: 20%;">
+
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.DateSort">
+                        Date and Time
+                        @if (ViewBag.CurrentSort as string == "Date_desc")
+                        {
+                            <span class="sort-arrow">&#9650;</span> <!-- Down arrow -->
+                        }
+                        else if (ViewBag.CurrentSort as string == null)
+                        {
+                            <span class="sort-arrow">&#9660;</span> <!-- Up arrow -->
+                        }
+                    </a>
+                </th>
+                <th class="text-white" style="width: 25%;">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.TitleSort">
+                        Transaction
+                        @if (ViewBag.CurrentSort as string == "title_desc")
+                        {
+                            <span class="sort-arrow">&#9650;</span> <!-- Down arrow -->
+                        }
+                        else if (ViewBag.CurrentSort as string == "Title")
+                        {                            
+                            <span class="sort-arrow">&#9660;</span> <!-- Up arrow -->
+                        }
+                    </a>
+                    
+                </th>
+                <th class="text-white" style="width: 20%;">
+                    
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.AmountSort">
+                        Amount
+                        @if (ViewBag.CurrentSort as string == "Amount_desc")
+                        {
+                            <span class="sort-arrow">&#9650;</span> <!-- Down arrow -->
+                        }
+                        else if (ViewBag.CurrentSort as string == "Amount")
+                        {
+                            <span class="sort-arrow">&#9660;</span> <!-- Up arrow -->
+                        }
+                    </a>
+                </th>
+                <th class="text-white" style="width: 20%;">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.CategorySort">
+                        Category
+                        @if (ViewBag.CurrentSort as string == "Category")
+                        {
+                            <span class="sort-arrow">&#9660;</span> <!-- Up arrow -->
+                        }
+                        else if (ViewBag.CurrentSort as string == "Category_desc")
+                        {
+                            <span class="sort-arrow">&#9650;</span> <!-- Down arrow -->                            
+                        }
+                    </a>
+                </th>
+                <th class="text-white">
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr class="highlight-row">
+                <td class="text-white">
+                    @Html.DisplayFor(modelItem => item.DateTime)
+
+                </td>
+                <td class="text-white">
+
+                    @if (item.Category.IsExpense)
+                    {
+                        <div>🟥 @Html.DisplayFor(modelItem => item.Title)</div>
+                    }
+                    else
+                    {
+                        <div>🟩 @Html.DisplayFor(modelItem => item.Title)</div>
+                    }
+
+                </td>
+                    <td class="text-white">
+                    $@item.Amount
+                </td>
+                    <td class="text-white">
+                        @if (item.Category.IsExpense)
+                        {
+                            <div>@item.Category.Icon @item.Category.Title</div>
+                        }
+                        else
+                        {
+                            <div>@item.Category.Icon @item.Category.Title</div>
+                        }
+                </td>
+                    <td class="text-white" style="text-align: right;display: flex; justify-content: flex-end">
+                        <a class="btn btn-sm btn-outline-warning" style="color: white; text-decoration: none; border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 2px;" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-sm btn-outline-danger" style="color: white; text-decoration: none; border-top-left-radius: 0; border-bottom-left-radius: 0" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>

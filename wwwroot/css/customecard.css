@@ -1,0 +1,12 @@
+﻿.container-wrapper {
+    margin-top: 20px; /* Example margin */
+}
+
+.card {
+    border: 1px solid #ccc; /* Example border */
+}
+
+.bg-dark {
+    background-color: #343a40; /* Example dark background color */
+    color: #fff; /* Example text color */
+}

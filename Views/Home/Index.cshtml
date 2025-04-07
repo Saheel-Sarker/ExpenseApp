@@ -1,0 +1,223 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewData["Title"]</title>
+    <link href="https://cdn.syncfusion.com/ej2/19.3.55/material.css" rel="stylesheet" />
+    <script src="https://cdn.syncfusion.com/ej2/19.3.55/dist/ej2.min.js"></script>
+</head>
+<div class="container-fluid" style="margin-top: 2.5%">
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="widget widget-green">
+                <span class="fw-bold">🟩 Total Income: $@ViewBag.TotalIncome</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="widget widget-red">
+                <span class="fw-bold">🟥 Total Expense: $@ViewBag.TotalExpense</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="widget widget-blue">
+                @if ((decimal)ViewBag.Balance < 0)
+                {
+                    <span class="fw-bold">🟦 Balance: -$@Math.Abs((decimal)ViewBag.Balance)</span>
+                }
+                else
+                {
+                    <span class="fw-bold">🟦 Balance: $@ViewBag.Balance</span>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row mb-8 row-equal-height" style="height: 650px">
+        <div class="col-md-3">
+            <div class="widget">
+                <div class="p-4 centered-text">
+                    <h5 class="fw-bold">🟩 Income Trends (%)</h5>
+                </div>
+                <div class="chart-container">
+                    <canvas id="income-pie-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="widget">
+                <div class="p-4 centered-text">
+                    <h5 class="fw-bold">🟥 Expense Trends (%)</h5>
+                </div>
+                <div class="chart-container">
+                    <canvas id="expense-pie-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="widget">
+                <div class="p-4 centered-text">
+                    <h5 class="fw-bold">Transactions (last 30 days)</h5>
+                </div>
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var incomeData = @Html.Raw(Json.Serialize(ViewBag.IncomeData));
+    var expenseData = @Html.Raw(Json.Serialize(ViewBag.ExpenseData));
+
+    var chartLabels = Object.keys(incomeData).concat(Object.keys(expenseData));
+    chartLabels = chartLabels.filter((v, i, a) => a.indexOf(v) === i).sort();
+
+    // Convert dates to 'YYYY-MM-DD' format
+    var formattedDates = chartLabels.map(function (date) {
+        var currentDate = new Date(date);
+        var month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
+        var day = currentDate.getDate();
+        return ('0' + month).slice(-2) + '-' + ('0' + day).slice(-2); // Ensure leading zeros
+    });
+
+    var incomeValues = chartLabels.map(function (date) {
+        return incomeData[date] || 0;
+    });
+
+    var expenseValues = chartLabels.map(function (date) {
+        return expenseData[date] || 0;
+    });
+
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: formattedDates,
+            datasets: [{
+                label: 'Income',
+                data: incomeValues,
+                borderColor: '#249515',
+                fill: false,
+            }, {
+                label: 'Expense',
+                data: expenseValues,
+                borderColor: 'red',
+                fill: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Ensure the chart uses the full available space
+            title: {
+                display: true,
+                text: 'Income vs Expense Trends'
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        displayFormats: {
+                            day: 'YYYY-MM-DD'
+                        }
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Date'
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Amount'
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var incomeData = @Html.Raw(Json.Serialize(ViewBag.IncomeCategoryData));
+    var expenseData = @Html.Raw(Json.Serialize(ViewBag.ExpenseCategoryData));
+
+    // Extracting labels and values from the dictionaries
+    var incomeLabels = Object.keys(incomeData);
+    var incomeValues = Object.values(incomeData);
+
+    var expenseLabels = Object.keys(expenseData);
+    var expenseValues = Object.values(expenseData);
+
+    var additionalColors = [
+        '#FF6384', '#36A2EB', '#FFCE56', '#4CAF50', '#FF9800',
+        '#9C27B0', '#3F51B5', '#2196F3', '#009688', '#FF5722',
+        '#795548', '#607D8B', '#673AB7', '#E91E63', '#03A9F4',
+        '#8BC34A', '#FFEB3B', '#CDDC39', '#FFC107', '#FF5722',
+        '#795548', '#607D8B', '#009688', '#FF5722', '#9C27B0'
+    ];
+
+    // Pie chart for income
+    var incomeChartCtx = document.getElementById('income-pie-chart').getContext('2d');
+    var incomePieChart = new Chart(incomeChartCtx, {
+        type: 'pie',
+        data: {
+            labels: incomeLabels,
+            datasets: [{
+                label: 'Income Trends (%)',
+                data: incomeValues,
+                backgroundColor: additionalColors, // Customize colors as needed
+                borderColor: '#202020'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Ensure the chart uses the full available space
+            title: {
+                display: true,
+                text: 'Income Trends (%)'
+            },
+            legend: {
+                display: true,
+                position: 'bottom', // Position legend at the bottom
+                labels: {
+                    padding: 250 // Add padding to the legend labels
+                }
+            }
+        }
+
+    });
+
+    // Pie chart for expenses
+    var expenseChartCtx = document.getElementById('expense-pie-chart').getContext('2d');
+    var expensePieChart = new Chart(expenseChartCtx, {
+        type: 'pie',
+        data: {
+            labels: expenseLabels,
+            datasets: [{
+                label: 'Expense Trends (%)',
+                data: expenseValues,
+                backgroundColor: additionalColors, // Customize colors as needed
+                borderColor: '#202020'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false, // Ensure the chart uses the full available space
+            title: {
+                display: true,
+                text: 'Expense Trends (%)'
+            },
+            legend: {
+                display: true,
+                position: 'bottom', // Position legend at the bottom
+                labels: {
+                    padding: 250 // Add padding to the legend labels
+                }
+            }
+        }
+    });
+</script>

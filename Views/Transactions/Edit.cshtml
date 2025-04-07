@@ -1,0 +1,45 @@
+﻿@model ExpenseApp.Models.Transaction
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container" style="width:75%; margin-top: 13%">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="widget" style="background-color: #202126">
+                <h3 style="text-align:center; margin-top:7%">Edit Transaction</h3>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group" style="margin-inline: 5%; margin-top:10%">
+
+                        <input asp-for="Title" class="form-control text-white" style="background-color: #202126" placeholder="Enter Title..." />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="margin-inline: 5%; margin-top:3% ">
+
+                        <input asp-for="Amount" class="form-control text-white" style="background-color: #202126" placeholder="Enter Amount..." />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="margin-inline: 5%; margin-top:3% ">
+                        <input asp-for="DateTime" class="form-control text-white" style="background-color: #202126" />
+                        <span asp-validation-for="DateTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="margin-inline: 5%; margin-top:3% ">
+                        <select asp-for="CategoryId" class="form-control text-white" style="background-color: #202126" asp-items="ViewBag.CategoryId"></select>
+                    </div>
+                    <div class="form-group" style="text-align:center; margin-top: 5%">
+                        <button type="submit" class="btn btn-outline-success" style="color: white; text-decoration: none;">Save</button>
+                        <a class="btn btn-outline-info" style="color: white; text-decoration: none" asp-action="Index">Back to List</a>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

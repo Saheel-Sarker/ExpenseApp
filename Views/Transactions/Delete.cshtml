@@ -1,0 +1,21 @@
+﻿@model ExpenseApp.Models.Transaction
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="table-container widget" style="max-width: 25%;  margin: 0 auto; margin-top: 15%">
+    <h3 style="margin-top: 7%">Delete?</h3>
+    <div style="text-align:center; margin-top: 10%">
+            <div>Title: @Model.Title</div>
+            <div>Amount: @Model.Amount</div>
+            <div>Date: @Model.DateTime</div>
+            <div>Category: @Model.Category.Title @Model.Category.Icon</div>
+    
+        <form asp-action="Delete" style="margin-top:7%">
+            <input type="hidden" asp-for="Id" />
+            <input type="submit" value="Delete" class="btn btn-outline-danger" style="color: white; text-decoration: none;" />
+            <a class="btn  btn-outline-info" style="color: white; text-decoration: none" class="btn btn-sm btn-outline-info" asp-action="Index">Back to List</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ExpenseApp.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="table-container" style="max-width: 650px; margin: 0 auto; margin-top: 2.5%">
+    <h2 style="text-align:center; margin-top:4.5%;">Categories</h2>
+    <form style="margin-left: 89.5%">
+        <button type="submit" class="fab" style=" padding: 10px 15px" asp-action="Create" asp-controller="Categories"><i class="fas fa-pen"></i></button>
+    </form>
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-group input-group text-danger" style="margin-top: 4%; display: flex; justify-content: flex-end;">
+            <input type="search" class="form-control text-white" style="background-color: #202126; max-width: 150px; border-top-right-radius: 0; border-bottom-right-radius: 0;" name="searchString" placeholder="Search" />
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-outline-success" style="color: white; text-decoration: none; border-top-left-radius: 0; border-bottom-left-radius: 0;">
+                    <i class="fas fa-search"></i>
+                </button>
+            </span>
+        </div>
+    }
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-white">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.CategorySortParm">Category
+                        @if (ViewBag.CurrentOrder as string == "name_desc")
+                        {
+                            <span class="sort-arrow">&#9650;</span> <!-- Down arrow -->
+                        }
+                        else if (ViewBag.CurrentOrder as string == null)
+                                    {
+                            <span class="sort-arrow">&#9660;</span> <!-- Up arrow -->
+                        }
+                    </a>
+                </th>
+                <th class="text-white">
+                    <a asp-action="Index" asp-route-sortOrder="@ViewBag.TypeSortParm">Type
+                        @if (ViewBag.CurrentOrder as string == "Type")
+                        {
+                            <span class="sort-arrow">&#9660;</span>
+                        }
+                        else if (ViewBag.CurrentOrder as string == "type_desc")
+                        {
+                            <span class="sort-arrow">&#9650;</span>
+                        }
+                    </a>
+                </th>
+                <th class="text-white">
+                
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model) {
+            <tr class="highlight-row">
+                <td class="text-white">
+                    @item.Icon @item.Title
+                </td >
+                <td class="text-white">
+                    @if (item.IsExpense)
+                    {
+                        <div class="text-red">🟥 Expense </div>
+                    }
+                    else
+                    {
+                        <div class="Text-red">🟩 Income &nbsp</div>
+                    }
+                </td>
+                <td class="text-white" style="text-align: right;display: flex; justify-content: flex-end">
+                    <a class="btn btn-sm btn-outline-warning" style="color: white; text-decoration: none; border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: 2px;" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    <a class="btn btn-sm btn-outline-danger" style="color: white; text-decoration: none; border-top-left-radius: 0; border-bottom-left-radius: 0" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
