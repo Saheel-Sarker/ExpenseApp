@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on:
-      - sqlserver
     ports:
       - "8000:8000" # 8000 on your machine -> 80 inside container
     environment:
