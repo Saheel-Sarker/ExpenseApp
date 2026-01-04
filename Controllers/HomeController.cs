@@ -19,7 +19,7 @@ namespace ExpenseApp.Controllers
 
         public async Task<IActionResult> Index()
         {
-            DataSeeder.Seed(_context);
+            // DataSeeder.Seed(_context);
 
             var transactions = await _context.Transaction.Include(t => t.Category).ToListAsync();
             totalIncome = transactions

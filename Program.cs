@@ -18,7 +18,15 @@ if (string.IsNullOrEmpty(rawUrl))
 var databaseUri = new Uri(rawUrl);
 var userInfo = databaseUri.UserInfo.Split(':');
 
-var npgsqlConnStr = $"Host={databaseUri.Host};Port={databaseUri.Port};Username={userInfo[0]};Password={userInfo[1]};Database={databaseUri.AbsolutePath.TrimStart('/')};SSL Mode=Require;Trust Server Certificate=true;";
+var port = databaseUri.Port > 0 ? databaseUri.Port : 5432;
+
+var npgsqlConnStr =
+    $"Host={databaseUri.Host};" +
+    $"Port={port};" +
+    $"Username={userInfo[0]};" +
+    $"Password={userInfo[1]};" +
+    $"Database={databaseUri.AbsolutePath.TrimStart('/')};" +
+    $"SSL Mode=Require;Trust Server Certificate=true;";
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(npgsqlConnStr));
